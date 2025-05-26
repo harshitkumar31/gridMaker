@@ -1,4 +1,4 @@
 
 ```bash
-python3 index.py
+python index.py
 ```

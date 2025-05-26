@@ -4,9 +4,18 @@ try:
     from PIL import Image
 except ImportError:
     import Image
+import sys
+import os
 
+color = 'white'
+
+if len(sys.argv) < 3:
+    print("Usage: python index.py <image_path> <color>")
+    sys.exit(1)
+image_path = sys.argv[1]
+color = sys.argv[2]
 # Open image file
-image = Image.open('Ganesh_4x4_1.jpeg')
+image = Image.open(image_path)
 my_dpi=100.
 
 # Set up figure
@@ -17,13 +26,13 @@ ax=fig.add_subplot(111)
 fig.subplots_adjust(left=0,right=1,bottom=0,top=1)
 
 # Set the gridding interval: here we use the major tick interval
-myInterval=100.
+myInterval=50.
 loc = plticker.MultipleLocator(base=myInterval)
 ax.xaxis.set_major_locator(loc)
 ax.yaxis.set_major_locator(loc)
 
 # Add the grid
-ax.grid(which='major', axis='both', linestyle='-', color='white')
+ax.grid(which='major', axis='both', linestyle='-', color=color)
 
 # Add the image
 ax.imshow(image)
@@ -37,7 +46,10 @@ for j in range(ny):
     y=myInterval/2+j*myInterval
     for i in range(nx):
         x=myInterval/2.+float(i)*myInterval
-        ax.text(x,y,'{:d}'.format(i+j*nx + 1),color='white',ha='center',va='center')
+        ax.text(x,y,'{:d}'.format(i+j*nx + 1),color=color,ha='center',va='center')
+
 
 # Save the figure
-fig.savefig('Ganesh_4x4_1_grid.jpeg',dpi=my_dpi)
+base, ext = os.path.splitext(image_path)
+output_path = f"{base}_grid{ext}"
+fig.savefig(output_path, dpi=my_dpi)
