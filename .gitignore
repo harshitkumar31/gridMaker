@@ -1,2 +1,4 @@
 *.jpeg
 *.jpg
+!lady.jpg
+!lady_grid.jpg
